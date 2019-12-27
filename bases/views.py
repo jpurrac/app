@@ -8,5 +8,5 @@ class Home(LoginRequiredMixin,generic.TemplateView): #los mixin se ponene al lad
     #la clase HOME hereda de lo que esta dentro del parentesis
     #template name, hace referencia a la plantilla que va a mostrar
     template_name = 'bases/home.html'
-    login_url ='/admin'
+    login_url ='bases:login'
 
