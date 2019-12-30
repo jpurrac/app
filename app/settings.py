@@ -29,7 +29,7 @@ ALLOWED_HOSTS = []
 
 
 # Application definition
-
+#SIEMPRE QUE SE CREE UNA APLICACION HAY QUE INSCRIBIRLA AQUI
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'bases',
+    'inv',
 ]
 
 MIDDLEWARE = [

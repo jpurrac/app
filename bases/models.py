@@ -1,3 +1,15 @@
 from django.db import models
+from django.contrib.auth.models import User
 
-# Create your models here.
+class ClaseModelo(models.Model):
+    #variables de la clase
+    estado = models.BooleanField(default=True) #estado
+    fc = models.DateTimeField(auto_now_add=True) #fecha creacion, se agregará automaticamente
+    fm = models.DateTimeField(auto_now=True) # fehcamodificacion
+    uc = models.ForeignKey(User, on_delete=models.CASCADE)
+    um = models.IntegerField(blank=True, null = True)
+
+    #Se le dice a Djgango, que no tome en cuenta el modelo al emigrar
+    class Meta:
+        abstract = True
+
