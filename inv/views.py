@@ -2,8 +2,8 @@ from django.shortcuts import render, redirect
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
-from .models import Categoria, SubCategoria, Marca, UnidadMedida
-from .forms import CategoriaForm, SubCategoriaForm, MarcaForm, UMForm
+from .models import Categoria, SubCategoria, Marca, UnidadMedida, Producto
+from .forms import CategoriaForm, SubCategoriaForm, MarcaForm, UMForm, ProductoForm
 
 # SE CREAN LAS VISTAS 
 
@@ -27,7 +27,7 @@ class CategoriaNew(LoginRequiredMixin, generic.CreateView): #CreateView, Django 
         return super().form_valid(form)
 
 class CategoriaEdit(LoginRequiredMixin, generic.UpdateView): #CreateView, Django interpretara que se insertaran datos
-    model = Categoria
+    model = Producto
     template_name = "inv/categoria_form.html"
     context_object_name = "obj"
     form_class= CategoriaForm
@@ -160,7 +160,7 @@ class UMEdit(LoginRequiredMixin, generic.UpdateView):
         form.instance.um = self.request.user.id
         return super().form_valid(form)
 
-def UM_inactivar(request, id): #88 - 89 REVISAR
+def um_inactivar(request, id): #88 - 89 REVISAR
     um = UnidadMedida.objects.filter(pk=id).first()
     contexto={}
     template_name = "inv/catalogos_del.html"
@@ -169,7 +169,7 @@ def UM_inactivar(request, id): #88 - 89 REVISAR
         return redirect("inv:um_list")
     
     if request.method=='GET':
-        contexto = {'obj':UnidadMedida}
+        contexto = {'obj':um}
     
 
     if request.method=='POST':
@@ -178,3 +178,54 @@ def UM_inactivar(request, id): #88 - 89 REVISAR
         return redirect("inv:um_list")
 
     return render(request, template_name, contexto)
+
+class ProductoView(LoginRequiredMixin, generic.ListView):
+    model = Producto
+    template_name = "inv/producto_list.html"
+    context_object_name = "obj"
+    login_url = "bases:login"
+
+
+class ProductoNew(LoginRequiredMixin, generic.CreateView): #CreateView, Django interpretara que se insertaran datos
+    model = Producto
+    template_name = "inv/producto_form.html"
+    context_object_name = "obj"
+    form_class= ProductoForm
+    success_url= reverse_lazy("inv:producto_list")
+    login_url = "bases:login"
+
+    def form_valid(self, form): #video 64
+        form.instance.uc = self.request.user
+        return super().form_valid(form)
+
+class ProductoEdit(LoginRequiredMixin, generic.UpdateView): #CreateView, Django interpretara que se insertaran datos
+    model = Producto
+    template_name = "inv/producto_form.html"
+    context_object_name = "obj"
+    form_class= ProductoForm
+    success_url= reverse_lazy("inv:producto_list")
+    login_url = "bases:login"
+
+    def form_valid(self, form): #video 68
+        form.instance.um = self.request.user.id
+        return super().form_valid(form)
+
+def producto_inactivar(request, id): #88 - 89 REVISAR
+    producto = Producto.objects.filter(pk=id).first()
+    contexto={}
+    template_name = "inv/catalogos_del.html"
+
+    if not producto:
+        return redirect("inv:producto_list")
+    
+    if request.method=='GET':
+        contexto = {'obj':producto}
+    
+
+    if request.method=='POST':
+        producto.estado=False
+        producto.save()
+        return redirect("inv:producto_list")
+
+    return render(request, template_name, contexto)
+
