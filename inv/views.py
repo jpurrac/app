@@ -27,7 +27,7 @@ class CategoriaNew(LoginRequiredMixin, generic.CreateView): #CreateView, Django 
         return super().form_valid(form)
 
 class CategoriaEdit(LoginRequiredMixin, generic.UpdateView): #CreateView, Django interpretara que se insertaran datos
-    model = Producto
+    model = Categoria
     template_name = "inv/categoria_form.html"
     context_object_name = "obj"
     form_class= CategoriaForm
