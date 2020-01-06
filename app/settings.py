@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'bases',
     'inv',
+    'cmp',
 ]
 
 MIDDLEWARE = [
@@ -81,7 +82,7 @@ DATABASES = {
         'NAME': 'dbprueba',
         'HOST': 'localhost',
         'USER': 'postgres',
-        'PASSWORD': 'casa1238',
+        'PASSWORD': '1238',
         'PORT': 5432
 
     }
