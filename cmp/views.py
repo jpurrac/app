@@ -40,3 +40,7 @@ class ProveedorEdit(LoginRequiredMixin, generic.UpdateView): #CreateView, Django
         print(self.request.user.id)
         return super().form_valid(form)
 
+def proveedorInactivar(request, id):
+    template_name='cmp/proveedor_inact.html'
+    contexto = {}
+    return render(request, template_name,contexto)
