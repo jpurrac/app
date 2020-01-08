@@ -34,4 +34,4 @@ class Proveedor(ClaseModelo):
         super(Proveedor, self).save()
 
     class Meta:
-        verbose_name_plural= "Proveedores"
+        verbose_name_plural = "Proveedores"
