@@ -79,7 +79,7 @@
             <a class="collapse-item" href="{% url 'inv:um_list' %}">Unidades de Medida</a>
             <a class="collapse-item" href="{% url 'inv:producto_list' %}">Productos</a>
             <h6 class="collapse-header">Catálogos de Compras</h6>
-            <a class="collapse-item" href="{% url 'cmp:proveedor_list' %}">Categorías</a>
+            <a class="collapse-item" href="{% url 'cmp:proveedor_list' %}">Proveedores</a>
           </div>
         </div>
       </li>
@@ -438,8 +438,8 @@
     return false;
   }
 
-  function mensaje(){
-    $.aler({
+  function mensaje(msg, color='green'){
+    $.alert({
       title:'',
       theme: 'material',
       type: color,
