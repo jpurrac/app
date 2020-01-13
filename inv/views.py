@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse_lazy
 from django.contrib import messages
 from .models import Categoria, SubCategoria, Marca, UnidadMedida, Producto
@@ -15,25 +16,27 @@ class CategoriaView(LoginRequiredMixin, generic.ListView):
     login_url = "bases:login"
 
 
-class CategoriaNew(LoginRequiredMixin, generic.CreateView): #CreateView, Django interpretara que se insertaran datos
+class CategoriaNew(SuccessMessageMixin, LoginRequiredMixin, generic.CreateView): #CreateView, Django interpretara que se insertaran datos
     model = Categoria
     template_name = "inv/categoria_form.html"
     context_object_name = "obj"
     form_class= CategoriaForm
     success_url= reverse_lazy("inv:categoria_list")
     login_url = "bases:login"
+    success_message="Categoría Creada Satisfactoriamente"
 
     def form_valid(self, form): #video 64
         form.instance.uc = self.request.user
         return super().form_valid(form)
 
-class CategoriaEdit(LoginRequiredMixin, generic.UpdateView): #CreateView, Django interpretara que se insertaran datos
+class CategoriaEdit(SuccessMessageMixin,LoginRequiredMixin, generic.UpdateView): 
     model = Categoria
     template_name = "inv/categoria_form.html"
     context_object_name = "obj"
     form_class= CategoriaForm
     success_url= reverse_lazy("inv:categoria_list")
     login_url = "bases:login"
+    success_message="Categoría Actualizada Satisfactoriamente"
 
     def form_valid(self, form): #video 68
         form.instance.um = self.request.user.id
@@ -127,6 +130,7 @@ def marca_inactivar(request, id): #88 - 89 REVISAR
     if request.method=='POST':
         marca.estado=False
         marca.save()
+        messages.success(request, 'Marca Inactivada') #video 107
         return redirect("inv:marca_list")
 
     return render(request, template_name, contexto)
