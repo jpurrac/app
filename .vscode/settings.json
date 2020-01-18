@@ -1,3 +1,5 @@
 {
-    "python.pythonPath": "C:\\python\\cursodjango\\entvirt\\Scripts\\python.exe"
+    "python.pythonPath": "C:\\python\\cursodjango\\entvirt\\Scripts\\python.exe",
+    "python.linting.pylintEnabled": true,
+    "python.linting.enabled": true
 }
