@@ -1,6 +1,7 @@
 from django.db import models
 
 from bases.models import ClaseModelo
+from inv.models import Producto
 
 class Proveedor(ClaseModelo):
     descripcion = models.CharField(
@@ -36,41 +37,48 @@ class Proveedor(ClaseModelo):
     class Meta:
         verbose_name_plural = "Proveedores"
 
-    class ComprasEnc(ClaseModelo):
-        fecha_compra = models.DataField(null=True, blank=True)
-        descripcion = models.TextField(null=True, blank= True)
-        no_factura = models.CharField(null=True, blank= True)
-        fecha_factura = models.DateField()
-        sub_total = models.FloatField(default=0)
-        descuento = models.FloatField(default=0)
-        total = models.FloatField(default=0)
+class ComprasEnc(ClaseModelo):
+    fecha_compra = models.DateField(null=True, blank=True)
+    descripcion = models.TextField(null=True, blank= True)
+    no_factura = models.CharField(max_length=100)
+    fecha_factura = models.DateField()
+    sub_total = models.FloatField(default=0)
+    descuento = models.FloatField(default=0)
+    total = models.FloatField(default=0)
 
-        proveedor = models.ForeignKey(Proveedor., on_delete=models.CASCADE) #investigar esta linea
+    proveedor = models.ForeignKey(Proveedor, on_delete=models.CASCADE) #investigar esta linea
 
-        def __str__(self):
-            return self.'{}'.format(self.observacion)
-        
-        def save(self):
-            self.observacion  = self.observacion.upper()
-            self.total = self.sub_total - self.descuento #se hace una resta
-            super(ComprasEnc, self).save() #121 video, cachar de nuevo
+    def __str__(self):
+        return '{}'.format(self.observacion)
+    
+    def save(self):
+        self.observacion  = self.observacion.upper()
+        self.total = self.sub_total - self.descuento #se hace una resta
+        super(ComprasEnc, self).save() #121 video, cachar de nuevo
 
-        class Meta:
-            verbose_name_plural = "Encabezado Compras"
-            verbose_name = "Encabezado Compras"
+    class Meta:
+        verbose_name_plural = "Encabezado Compras"
+        verbose_name = "Encabezado Compras"
 
-    class ComprasDel(ClaseModelo):
-        compra = models.ForeignKey(ComprasEnc, on_delete=models.CASCADE)
-        producto = models.ForeignKey(producto, on_delete=models.CASCADE) 
-        fecha_compra = models.DataField(null=True, blank=True)
-        descripcion = models.TextField(null=True, blank= True)
-        no_factura = models.CharField(null=True, blank= True)
-        fecha_factura = models.DateField()
-        sub_total = models.FloatField(default=0)
-        descuento = models.FloatField(default=0)
-        total = models.FloatField(default=0)
+class ComprasDet(ClaseModelo):
+    compra = models.ForeignKey(ComprasEnc, on_delete=models.CASCADE)
+    producto = models.ForeignKey(Producto, on_delete=models.CASCADE) 
+    cantidad = models.BigIntegerField(default=0)
+    precio_prv = models.FloatField(default=0)
+    sub_total = models.FloatField(default=0)
+    descuento = models.FloatField(default=0)
+    total = models.FloatField(default=0)
+    costo = models.FloatField(default=0)
 
-        proveedor = models.ForeignKey(Proveedor., on_delete=models.CASCADE) #investigar esta linea
 
-        def __str__(self):
-            return self.'{}'.format(self.observacion)
+    def __str__(self):
+        return '{}'.format(self.producto)
+
+    def save(self):
+        self.sub_total = float(float(int(self.cantidad)) * float(self.precio_prv))
+        self.total = self.sub_total - float(self.descuento)
+        super(ComprasDet, self).save()
+
+    class Meta:
+        verbose_name_plural = "Detalles Compras"
+        verbose_name = "Detalle Compra"
