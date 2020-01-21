@@ -39,7 +39,7 @@ class Proveedor(ClaseModelo):
 
 class ComprasEnc(ClaseModelo):
     fecha_compra = models.DateField(null=True, blank=True)
-    descripcion = models.TextField(null=True, blank= True)
+    observacion = models.TextField(null=True, blank= True)
     no_factura = models.CharField(max_length=100)
     fecha_factura = models.DateField()
     sub_total = models.FloatField(default=0)
