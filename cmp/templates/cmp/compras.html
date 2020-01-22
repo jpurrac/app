@@ -170,7 +170,7 @@
                                                 <td>{{ item.descuento }}</td>
                                                 <td>{{ item.total }}</td>
                                                 <td>
-                                                    <button class="btn btn-danger btn-circle" onclick="return abrir_modal('{% url 'cmp:compras_del' encabezado.pk item.id %}')"><i class="fas fa-trash-alt"></i></button>
+                                                  <!-- BORRE EL BOTON, HAY QUE AGREGARLO-->
                                                 </td>
                                                 </tr>
                                                 {% endfor %}
@@ -191,7 +191,7 @@
   $(document).ready(function() {
 
     $("#id_fecha_factura, #id_fecha_compra").datetimepicker({  
-       format: 'd/m/Y',  
+       format: 'Y-m-d',  
        timepicker:false  
     });  
     
@@ -247,7 +247,7 @@
 
   }
 
-  function calcular_detalle(){
+  function calcular_detalle(){ //video 126
     var cant, prec, desc, stotal, total;
 
     cant = $("#id_cantidad_detalle").val();
@@ -273,7 +273,14 @@
 
     $("#id_sub_total_detalle").val(stotal);
     $("#id_total_detalle").val(total);
+  }
 
+  function clear_Detail(){
+      $("#id_cantidad_detalle").val(0);
+      $("#id_precio_detalle").val(0);
+      $("#id_descuento_detalle").val(0);
+      $("#id_sub_total_detalle").val(0);
+      $("#id_total_detalle").val(0);
 
   }
 </script>
