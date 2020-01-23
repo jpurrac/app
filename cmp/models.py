@@ -3,6 +3,7 @@ from django.db import models
 from bases.models import ClaseModelo
 from inv.models import Producto
 
+
 class Proveedor(ClaseModelo):
     descripcion = models.CharField(
         max_length=100,
