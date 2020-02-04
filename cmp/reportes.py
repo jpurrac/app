@@ -4,6 +4,7 @@ from django.http import HttpResponse
 from django.template import Context
 from django.template.loader import get_template
 from xhtml2pdf import pisa
+from django.utils import timezone
 
 from .models import ComprasEnc, ComprasDet
 
@@ -35,7 +36,7 @@ def link_callback(uri, rel):
 
 def reporte_compras(request):
     template_path="cmp/compras_print_all.html"
-    today = timezone.now
+    today = timezone.now()
 
     compras = ComprasEnc.objects.all() #se piden todas las compras que hay
     context = {
@@ -46,12 +47,14 @@ def reporte_compras(request):
 
     response = HttpResponse(content_type='aplication/pdf')
     response['Content-Disposition'] = 'inline; filename="todas_compras.pdf"'
-    template_path = get_template(template_path)
+    template = get_template(template_path)
     html = template.render(context)
 
+    #crea el PDF
     pisaStatus = pisa.CreatePDF(
         html, dest = response, link_callback=link_callback
     )
+    #SI HAY ALGUN ERROR
     if pisaStatus.err:
-        return HttpResponse('We had some errors<pre>' + html + '</pres'>)
+        return HttpResponse('We had some errors<pre>' + html + '</pres>')
     return response
