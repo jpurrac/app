@@ -46,7 +46,7 @@ def reporte_compras(request):
     }
 
     response = HttpResponse(content_type='aplication/pdf')
-    response['Content-Disposition'] = 'inline; filename="todas_compras.pdf"'
+    response['Content-Disposition'] = 'inline; filename="report.pdf"'
     template = get_template(template_path)
     html = template.render(context)
 
