@@ -58,3 +58,35 @@ def reporte_compras(request):
     if pisaStatus.err:
         return HttpResponse('We had some errors<pre>' + html + '</pres>')
     return response
+
+def imprimir_compra(request, compra_id):
+    template_path = 'cmp/compras_print_one.html'
+    today = timezone.now()
+
+    enc = ComprasEnc.objects.filter(id=compra_id).first()
+
+    if enc:
+        detalle = ComprasDet.objects.filter(compra__id = compra_id) #se toma el id de compra para comparar
+    else:
+        detalle = {}
+
+    context = {
+        'detalle' : detalle,
+        'encabezado' : enc,
+        'today' : today,
+        'request' : request
+    }
+
+    response = HttpResponse(content_type='aplication/pdf')
+    response['Content-Disposition'] = 'inline; filename="report.pdf"'
+    template = get_template(template_path)
+    html = template.render(context)
+
+    #crea el PDF
+    pisaStatus = pisa.CreatePDF(
+        html, dest = response, link_callback=link_callback
+    )
+    #SI HAY ALGUN ERROR
+    if pisaStatus.err:
+        return HttpResponse('We had some errors<pre>' + html + '</pres>')
+    return response
