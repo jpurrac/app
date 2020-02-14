@@ -45,18 +45,19 @@ def reporte_compras(request):
         'request' : request
     }
 
-    response = HttpResponse(content_type='aplication/pdf')
+    # Create a Django response object, and specify content_type as pdf
+    response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = 'inline; filename="report.pdf"'
+    # find the template and render it.
     template = get_template(template_path)
     html = template.render(context)
 
-    #crea el PDF
+    # create a pdf
     pisaStatus = pisa.CreatePDF(
-        html, dest = response, link_callback=link_callback
-    )
-    #SI HAY ALGUN ERROR
+       html, dest=response, link_callback=link_callback)
+    # if error then show some funy view
     if pisaStatus.err:
-        return HttpResponse('We had some errors<pre>' + html + '</pres>')
+       return HttpResponse('We had some errors <pre>' + html + '</pre>')
     return response
 
 def imprimir_compra(request, compra_id):
@@ -77,16 +78,17 @@ def imprimir_compra(request, compra_id):
         'request' : request
     }
 
-    response = HttpResponse(content_type='aplication/pdf')
+    # Create a Django response object, and specify content_type as pdf
+    response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = 'inline; filename="report.pdf"'
+    # find the template and render it.
     template = get_template(template_path)
     html = template.render(context)
 
-    #crea el PDF
+    # create a pdf
     pisaStatus = pisa.CreatePDF(
-        html, dest = response, link_callback=link_callback
-    )
-    #SI HAY ALGUN ERROR
+       html, dest=response, link_callback=link_callback)
+    # if error then show some funy view
     if pisaStatus.err:
-        return HttpResponse('We had some errors<pre>' + html + '</pres>')
+       return HttpResponse('We had some errors <pre>' + html + '</pre>')
     return response

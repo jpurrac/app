@@ -131,3 +131,23 @@ dmypy.json
 .history
 
 # End of https://www.gitignore.io/api/django,visualstudiocode
+app/__pycache__/__init__.cpython-38.pyc
+app/__pycache__/settings.cpython-38.pyc
+app/__pycache__/urls.cpython-38.pyc
+app/__pycache__/wsgi.cpython-38.pyc
+app/settings.py
+bases/__pycache__/__init__.cpython-38.pyc
+bases/__pycache__/admin.cpython-38.pyc
+bases/__pycache__/models.cpython-38.pyc
+bases/__pycache__/urls.cpython-38.pyc
+bases/__pycache__/views.cpython-38.pyc
+bases/migrations/__pycache__/__init__.cpython-38.pyc
+cmp/templates/cmp/compras_print_all.html
+inv/__pycache__/__init__.cpython-38.pyc
+inv/__pycache__/admin.cpython-38.pyc
+inv/__pycache__/forms.cpython-38.pyc
+inv/__pycache__/models.cpython-38.pyc
+inv/__pycache__/urls.cpython-38.pyc
+inv/__pycache__/views.cpython-38.pyc
+inv/migrations/__pycache__/0001_initial.cpython-38.pyc
+inv/migrations/__pycache__/__init__.cpython-38.pyc

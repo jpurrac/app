@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'bases',
     'inv',
     'cmp',
+    'fac',
 ]
 
 MIDDLEWARE = [
@@ -82,7 +83,7 @@ DATABASES = {
         'NAME': 'dbprueba',
         'HOST': 'localhost',
         'USER': 'postgres',
-        'PASSWORD': '1238',
+        'PASSWORD': 'casa1238',
         'PORT': 5432
 
     }
