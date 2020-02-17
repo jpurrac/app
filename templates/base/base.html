@@ -77,7 +77,7 @@
         </a>
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Catálogos de Inventario</h6>
+            <h6 class="collapse-header">Catálogos de Inventario:</h6>
             {% if perms.inv.view_categoria %}
             <a class="collapse-item" href="{% url 'inv:categoria_list' %}">Categorías</a>
             {% endif %}
@@ -94,9 +94,14 @@
             <a class="collapse-item" href="{% url 'inv:producto_list' %}">Productos</a>
             {% endif %}
             
-            <h6 class="collapse-header">Catálogos de Proveedores</h6>
+            <h6 class="collapse-header">Catálogos de Proveedores:</h6>
             {% if perms.cmp.view_proveedor %}
             <a class="collapse-item" href="{% url 'cmp:proveedor_list' %}">Proveedores</a>
+            {% endif %}
+
+            <h6 class="collapse-header">Catálogos de Facturación:</h6>
+            {% if perms.fac.view_cliente %}
+            <a class="collapse-item" href="{% url 'fac:cliente_list' %}">Clientes</a>
             {% endif %}
           </div>
         </div>
