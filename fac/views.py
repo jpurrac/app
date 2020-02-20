@@ -3,6 +3,7 @@ from django.views import generic
 
 from bases.views import SinPrivilegios
 from .models import Cliente
+from .forms import ClienteForm
 
 
 # Create your views here.

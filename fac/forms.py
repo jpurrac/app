@@ -3,7 +3,6 @@ from django import forms
 from .models import Cliente
 
 class ClienteForm(forms.ModelForm):
-    email = forms.EmailField(max_length=254)
 
     class Meta:
         model= Cliente
