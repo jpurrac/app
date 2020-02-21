@@ -1,9 +1,9 @@
 <div class="modal-dialog modal-lg">
     <div class="modal-content">
         {% if obj %}
-        <form method="POST" role="form-inline" class="form-inline" action="{% url 'cmp:proveedor_edit' obj.pk %}">
+        <form method="POST" role="form-inline" class="form-inline" action="{% url 'fac:cliente_edit' obj.pk %}">
         {% else %}
-        <form method="POST" role="form-inline" class="form-inline" action="{% url 'cmp:proveedor_new' %}"> <!-- video 93 -->
+        <form method="POST" role="form-inline" class="form-inline" action="{% url 'fac:cliente_new' %}"> <!-- video 93 -->
         {% endif %}
                 <!-- Earnings (Monthly) Card Example -->
                 <div class="col-xl-12 col-md-12 mb-12">
