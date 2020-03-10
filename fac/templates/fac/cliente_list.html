@@ -20,14 +20,17 @@
     {% if not obj %}
     <div class="alert alert-info">No hay Clientes</div>
     {% endif %}
-    <table data-toggle="table" data-pagination="true"  data-search="true" data-show-columns="true" id="table" data-show-toggle="true">
+    <div class="buttons-toolbar">
+      <a class="dropdown-item" onclick="return abrir_modal('{% url 'fac:cliente_new' %}')"> <i class="far fa-calendar-plus"></i> Nuevo</a>
+    </div>
+    <table data-toggle="table"  data-pagination="true"  data-search="true" data-show-columns="true" id="table" data-show-toggle="true" data-locale="es-ES" data-toolbar=".buttons-toolbar" data-show-fullscreen="true">
       <thead>
-        <th>ID</th>        
-        <th>Nombres</th>
-        <th>Apellidos</th>
-        <th>Tipo</th>
-        <th>Teléfono</th>
-        <th>Estado</th>
+        <th data-sortable="true" data-field="id">ID</th>        
+        <th data-sortable="true" data-field="nombres">Nombres</th>
+        <th data-sortable="true" data-field="apellidos">Apellidos</th>
+        <th data-sortable="true" data-field="tipo">Tipo</th>
+        <th data-field="tipo">Teléfono</th>
+        <th data-field="estado">Estado</th>
         <th class="all">Acciones</th>
       </thead>
       <tbody>
@@ -38,12 +41,14 @@
           <td>{{ item.apellidos }}</td>
           <td>{{ item.tipo }}</td>
           <td>{{ item.celular }}</td>
-          <td onclick="inactivar({{item.id}})">{# item.estado|yesno:"Activo,Inactivo" #}
-            {% if item.estado %}
-            <i class="far fa-thumbs-up text-primary"></i>
-            {% else %}
-            <i class="far fa-thumbs-down text-danger"></i>
-            {% endif %}
+          <td>{{ item.estado|yesno:"Activo,Inactivo" }}
+            <div onclick="inactivar({{item.id}})">
+              {% if item.estado %}
+              <i class="far fa-thumbs-up text-primary"></i>
+              {% else %}
+              <i class="far fa-thumbs-down text-danger"></i>
+              {% endif %}
+            </div>
           </td>
           <td>
             <button class="btn btn-warning btn-circle" onclick="return abrir_modal('{% url 'fac:cliente_edit' item.id %}')">

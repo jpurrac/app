@@ -89,6 +89,7 @@ def compras(request,compra_id=None):
     form_compras={}
     contexto={}
 
+    #Para cuando se edita?
     if request.method=='GET':
         form_compras=ComprasEncForm()
         enc = ComprasEnc.objects.filter(pk=compra_id).first()
@@ -113,7 +114,7 @@ def compras(request,compra_id=None):
         
         contexto={'productos':prod,'encabezado':enc,'detalle':det,'form_enc':form_compras}
 
-    if request.method=='POST':
+    if request.method=='POST': #Saca los datos del Input y los guarda en las variables... 
         fecha_compra = request.POST.get("fecha_compra")
         observacion = request.POST.get("observacion")
         no_factura = request.POST.get("no_factura")
@@ -126,6 +127,7 @@ def compras(request,compra_id=None):
         if not compra_id:
             prov=Proveedor.objects.get(pk=proveedor)
 
+            #Los datos que se recolectaron por el Input, se preparan para guardarlos en ComprasEnc(DB)
             enc = ComprasEnc(
                 fecha_compra=fecha_compra,
                 observacion=observacion,
