@@ -9,6 +9,7 @@ from datetime import datetime
 from bases.views import SinPrivilegios
 from .models import Cliente, FacturaEnc, FacturaDet
 from .forms import ClienteForm
+import inv.views as inv
 
 
 # Create your views here.
@@ -85,3 +86,7 @@ def facturas(request, id=None):
 
 
     return render(request, template_name, contexto)
+
+class ProductoView(inv.ProductoView): #Hereda de PrudctoView de Intventario
+    template_name = "fac/buscar_producto.html"
+
