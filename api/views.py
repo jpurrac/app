@@ -16,5 +16,5 @@ class ProductoList(APIView):
 class ProductoDetalle(APIView):
     def get(self, request, codigo):
         prod = get_object_or_404(Producto, codigo=codigo)
-        data = ProductoSerializer(data).data #se serializa prod.
+        data = ProductoSerializer(prod).data #se serializa prod.
         return Response(data)
