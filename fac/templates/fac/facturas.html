@@ -164,14 +164,14 @@
             console.log(r.existencia);
             console.log(r.estado);
 
-                if(r.existencia=0 || !r.estado){
-                    mensaje("Producto NO Tiene Existencia o está INACTIVO","orange")
-                    $("#codigo").val("");
-                    $("#descripcion").val("");
-                    $("#precio").val("0.00");
-                    $("#codigo").focus("");
-                    return false;
-                }
+            if(r.existencia=0 || !r.estado){
+                mensaje("Producto NO Tiene Existencia o está INACTIVO","orange")
+                $("#codigo").val("");
+                $("#descripcion").val("");
+                $("#precio").val("0.00");
+                $("#codigo").focus("");
+                return false;
+            }
 
             $("#codigo").val(r.codigo);
             $("#descripcion").val(r.descripciion);
