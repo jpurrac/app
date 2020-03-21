@@ -133,9 +133,11 @@
                             {% for item in obj %}
                             <tr>
                                 <td>{{ item.id }}</td>
-                                <td>{{ item.cliente }}</td>
+                                <td>{{ item.producto}}</td>
+                                <td>{{ item.producto.descripcion }}</td>
+                                <td>{{ item.cantidad }}</td>
+                                <td>{{ item.sub_total }}</td>
                                 <td>{{ item.total }}</td>
-                                <td>{{ item.estado|yesno:"Activo,Inactivo" }}</td>
                                 <td>
                                     <button class="btn btn-warning btn-circle">
                                         <i class="far fa-edit"></i>
@@ -159,7 +161,7 @@
         var cant, prec, desc, stotal, total;
 
         cant = $("#cantidad").val(); //cant guarda el valor de lo que haya en el input de cantidad
-        cant = cant === "" ? 0 : cant; // cantidad es igual a vacio ? si es true es 0 : si no, se asigna cantidad
+        cant = cant === "" ? 0 : +cant; // cantidad es igual a vacio ? si es true es 0 : si no, se asigna cantidad
         console.log(cant);
         cant = cant < 0 ? 0 : cant; //cantidad es menor a 0 ? si es true se asisgna 0 : sino, es igual a cantidad
 
@@ -182,7 +184,6 @@
 
         $("#sub_total_detalle").val(desc);
         $("#total_detalle").val(total);
-
 
     }
 
@@ -263,6 +264,13 @@
         $("#cantidad,#precio,#descuento_detalle").change(function(){
             calcular_detalle();
         });
+
+        $("#enc_id").val("{{ enc.id }}"); //va a atomar el valor que se le paso por view
+        $("#enc_cliente").val("{{ enc.cliente.id }}").change();
+        $("#fecha").val("{{ enc.fecha|date:'Y-m-d' }}");
+        $("#sub_total").val({{ enc.sub_total }}); // algo pasa por aqui, ????
+        $("#descuento").val({{ enc.descuento }});
+        $("#total").val({{ enc.total }});
     });
 
 </script>

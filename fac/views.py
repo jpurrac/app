@@ -77,14 +77,38 @@ class FacturaView(SinPrivilegios, generic.ListView):
 def facturas(request, id=None):
     template_name='fac/facturas.html'
 
-    encabezado = {
-        'fecha':datetime.today() #fecha del dia
-    }
     detalle = {}
     clientes = Cliente.objects.filter(estado=True)
-    contexto = { "enc":encabezado, "det":detalle, "clientes":clientes}
 
+    if  request.method == "GET":
+        enc = FacturaEnc.objects.filter(pk=id).first() #verifica si hay encabezado /id es el que entra por el metodo
+        if not enc:
+            encabezado = {
+                'id':0,
+                'fecha':datetime.today(),
+                'cliente':0,
+                'sub_total':0.00,
+                'descuento':0.00,
+                'total':0.00
+            }
+            detalle=None
+        else:
+            encabezado = {
+                'id':enc.id,
+                'fecha':enc.fecha,
+                'cliente':enc.cliente,
+                'sub_total':enc.sub_total,
+                'descuento':enc.descuento,
+                'total':enc.total
+            }
+            detalle = FacturaDet.objects.filter(factura=enc)
+        contexto = { "enc":encabezado, "det":detalle, "clientes":clientes}
 
+    if request.method == "POST":
+        cliente = request.POST.get("enc_cliente")
+        fecha = request.POST.get("fecha")
+        cli = Cliente.objects.get(pk=cliente)
+        
     return render(request, template_name, contexto)
 
 class ProductoView(inv.ProductoView): #Hereda de PrudctoView de Intventario
