@@ -1,6 +1,8 @@
 {% extends 'base/base.html' %}
 
 {% block page_content %}
+<form method="POST" id="frmFacturas">
+    {% csrf_token %}
 <div class="card shadow mb-4">
     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
         <a href="#" class="btn btn-danger"> Guardar</a>
@@ -17,7 +19,7 @@
                         <div class="row">
                             <div class="col-lg-1">No.:</div>
                             <div class="col-lg-4">
-                                <input type="text" name="enc_id" id="enc_id" readonly class="form-control">
+                                <input type="text" name="enc_id" id="enc_id" readonly class="form-control"> 
                             </div>
                             <div class="col-lg-2">Cliente</div>
                             <div class="col-lg-4 form-group">
@@ -92,7 +94,7 @@
                             <input type="number" class="form-control" name="descuento_detalle" id="descuento_detalle" placeholder="Descuento">
                         </div>
                         <div class="col-lg-1">
-                            <button type="button" class="btn btn-danger" id="btnGuardar">
+                            <button type="submit" class="btn btn-danger" id="btnGuardar">
                                 <i class="far fa-plus-square"></i>
                             </button>
                         </div>
@@ -130,13 +132,14 @@
                             <th class="all">Acciones</th>
                         </thead>
                         <tbody>
-                            {% for item in obj %}
+                            {% for item in det %}
                             <tr>
                                 <td>{{ item.id }}</td>
                                 <td>{{ item.producto}}</td>
                                 <td>{{ item.producto.descripcion }}</td>
                                 <td>{{ item.cantidad }}</td>
-                                <td>{{ item.sub_total }}</td>
+                                <td>{{ item.sub_total }}</td>.
+                                <td>{{ item.descuento }}</td>
                                 <td>{{ item.total }}</td>
                                 <td>
                                     <button class="btn btn-warning btn-circle">
@@ -153,6 +156,7 @@
         </div>
     </div>
 </div>
+</form>
 {% endblock page_content %}
 {% block js_page %}
 <script>
@@ -255,8 +259,9 @@
             abrir_modal("{% url 'fac:factura_producto' %}");
         });
 
-        $("#codigo").keypress(function(e){
+        $("#codigo").keypress(function(e){//e que recibe parametro callback
             if(e.keyCode===13){ //tecla presionada ENTER
+                e.preventDefault();// se desactivará el envio del form con ENTER
                 buscarProducto();
             }
         });

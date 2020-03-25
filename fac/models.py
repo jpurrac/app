@@ -37,7 +37,7 @@ class Cliente(ClaseModelo):
     class Meta:
         verbose_name_plural: "Clientes"
     
-class FacturaEnc(ClaseModelo2):
+class FacturaEnc(ClaseModelo2): #Factura encabezado
     cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
     fecha = models.DateTimeField(auto_now_add=True)
     sub_total = models.FloatField(default=0)
@@ -55,7 +55,7 @@ class FacturaEnc(ClaseModelo2):
         verbose_name_plural = "Encabezado Facturas"
         verbose_name = "Encabezado Factura"
     
-class FacturaDet(ClaseModelo2):
+class FacturaDet(ClaseModelo2):#Factura detalle
     factura = models.ForeignKey(FacturaEnc, on_delete=models.CASCADE)
     producto = models.ForeignKey (Producto, on_delete=models.CASCADE)
     cantidad = models.BigIntegerField(default=0)
