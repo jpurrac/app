@@ -115,12 +115,13 @@ def facturas(request, id=None): #se utiliza como vista | recibe el ID | ID se in
     if request.method == "POST": # sucede cuando se le da al boton btnGuardar (boton submit)
         #lo que activa el metodo POST
 
-        cliente = request.POST.get("enc_cliente") #rescata el valor que hay en el input enc_cliente y lo guarda como variable | se saca el valor del ID(numerico) del cliente (REVISAR EL HTML!!!)
+        cliente = request.POST.get("enc_cliente") #rescata el valor que hay en el input enc_cliente y lo guarda como variable | se saca el valor del ID(numerico) o nombre? del cliente (REVISAR EL HTML!!!)
         fecha = request.POST.get("fecha") # rescata el valor que hay en el input FECHA y lo guarda como variable
-
+        print(cliente)
         cli = Cliente.objects.get(pk=cliente) #se guarda el cli el objeto cliente que se recupero del id cliente
-
+        print(cli)
         if not id: #si NO existe ID que se está enviando en el template por el metodo
+
             enc = FacturaEnc(
                 cliente=cli, fecha= fecha
             )# las variables cliente y fecha, son enviaddos a enc(Modelo FacturaEnc). Crendo un nuevo enc
